@@ -1,11 +1,16 @@
-const express = require("express");
-
 const PORT = process.env.PORT || 3001;
 
+const express = require("express");
+const cors = require('cors');
+
 const app = express();
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+  // res.json({ message: "Hello from server!" });
+  res.send("Hello from server!");
 });
 
 
