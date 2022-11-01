@@ -5,12 +5,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   cursor: url("../public/lucky-clover.png"), auto;
-    background-image: url("../public/back-cover.jpg");
+  background-image: url("../public/back-cover.jpg");
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  /* color: inherit; */
+    /* text-decoration: none; */
 }
 
 * {
@@ -19,11 +19,11 @@ a {
 
 @media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
+    /* color-scheme: dark; */
   }
 
   body {
-    color: rgb(64, 64, 64);
+    /* color: rgb(64, 64, 64); */
       /* background: black; */
   }
 }
