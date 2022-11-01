@@ -15,6 +15,9 @@ const videoUrls = [
   ' https://youtu.be/as127zNyQ6k'
 ]
 
+const WIDTH = 900;
+const HEIGHT = WIDTH * 480 / 960;
+
 
 
 const App = () => {
@@ -50,7 +53,7 @@ const App = () => {
     <div>
       {/* <h1>Thanya Iyer | rest</h1> */}
       {!hasBegun &&
-        <button onClick={handleBegin} style={{ fontSize: '20px', float: 'rigth' }}>Begin</button>
+        <button onClick={handleBegin} style={{ fontSize: '20px' }}>Begin</button>
       }
       {hasBegun &&
         <>
@@ -64,12 +67,30 @@ const App = () => {
               className='react-player'
               url={videoUrls[currentVideo]}
               playing={isPlaying}
-              style={{ width: '743px', height: '419px' }}
               loop
+              width={`${WIDTH}px`}
+              height={`${HEIGHT}px`}
             />
           </div>
         </>
       }
+      <style>
+        {`
+          .player-wrapper {
+            width: auto;
+            height: auto;
+          }
+          .react-player {
+            // padding-top: 56.25%;
+            position: relative;
+          }
+
+          .react-player>div {
+            position: absolute;
+          }
+          
+        `}
+      </style>
     </div>
   );
 }
