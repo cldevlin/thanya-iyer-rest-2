@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
+import Image from 'next/image'
 import ReactPlayer from "react-player";
+import leftArrowBird from '../../public/left-arrow-bird.png'
+import rightArrowFlower from '../../public/right-arrow-flower.png'
+import eye from '../../public/eye.png'
 
 const videoUrls = [
   ' https://youtu.be/tKWryqqj-0c',
@@ -18,6 +22,12 @@ const videoUrls = [
 const WIDTH = 900;
 const HEIGHT = WIDTH * 480 / 960;
 
+const arrowWidth = 200;
+
+const beginButtonWidth = 400;
+const beginButtonHeight = 1394 / 1517 * beginButtonWidth;
+
+
 
 
 const App = () => {
@@ -33,7 +43,16 @@ const App = () => {
     } else {
       setCurrentVideo(0)
     }
-    console.log('clicked');
+  }
+
+  //function that switches to previous video
+  const handlePrevious = (e) => {
+    e.preventDefault()
+    if (currentVideo > 0) {
+      setCurrentVideo(prev => prev - 1)
+    } else {
+      setCurrentVideo(videoUrls.length - 1)
+    }
   }
 
   // useEffect(() => {
@@ -53,16 +72,19 @@ const App = () => {
     <div>
       {/* <h1>Thanya Iyer | rest</h1> */}
       {!hasBegun &&
-        <button onClick={handleBegin} style={{ fontSize: '20px' }}>Begin</button>
+        // <button onClick={handleBegin} style={{ fontSize: '20px' }}>Begin</button>
+        <Image className="begin-button" alt="eye" src={eye} onClick={handleBegin} />
       }
       {hasBegun &&
         <>
           <div style={{ padding: '10px 0' }}>
-            <button style={{ marginRight: '10px' }}>← Previous</button>
-            <button onClick={handleNext} style={{ float: 'right' }}>Next →</button>
+          {/* <button style={{ marginRight: '10px' }}>← Previous</button> */}
+          {/* <button onClick={handleNext} style={{ float: 'right' }}>Next →</button> */}
+          <Image className="image-button left-arrow" src={leftArrowBird} alt="left arrow bird" width="300px" height="200px" onClick={handlePrevious} />
+          <Image className="image-button right-arrow" src={rightArrowFlower} alt="right arrow flower" width="300px" height="175px" onClick={handleNext} style={{ float: 'right' }} />
           </div>
 
-          <div className="player-wrapper">
+        <div className="player-wrapper">
             <ReactPlayer
               className='react-player'
               url={videoUrls[currentVideo]}
@@ -70,12 +92,27 @@ const App = () => {
               loop
               width={`${WIDTH}px`}
               height={`${HEIGHT}px`}
+            config={{
+              file: {
+                attributes: {
+                  controlsList: "nofullscreen",
+                },
+              },
+            }}
             />
           </div>
         </>
       }
       <style>
         {`
+          .begin-button {
+            width: ${beginButtonWidth}px;
+            height: ${beginButtonHeight}px;
+          }
+          .begin-button:hover {
+            width: ${beginButtonWidth * 1.05}px;
+            height: ${beginButtonHeight * 1.05}px;
+          }
           .player-wrapper {
             width: auto;
             height: auto;
@@ -87,6 +124,24 @@ const App = () => {
 
           .react-player>div {
             position: absolute;
+          }
+
+          .image-button {
+            width: ${arrowWidth}px;
+          }
+            .image-button.left-arrow {
+              height: ${200 / 300 * arrowWidth}px;
+            }
+
+            .image-button.right-arrow {
+              height: ${175 / 300 * arrowWidth}px;
+            }
+
+          .image-button:hover {
+            width: ${arrowWidth * 1.05}px;
+
+            transition: width .1s;
+            -webkit-transition: width .1s;
           }
           
         `}
