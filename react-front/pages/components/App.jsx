@@ -28,8 +28,6 @@ const beginButtonWidth = 400;
 const beginButtonHeight = 1394 / 1517 * beginButtonWidth;
 
 
-
-
 const App = () => {
 
   const [currentVideo, setCurrentVideo] = useState(0)
@@ -73,16 +71,13 @@ const App = () => {
       {/* <h1>Thanya Iyer | rest</h1> */}
       {!hasBegun &&
         // <button onClick={handleBegin} style={{ fontSize: '20px' }}>Begin</button>
-        <Image className="begin-button" alt="eye" src={eye} onClick={handleBegin} />
+        <Image className="begin-button" alt="eye" src={eye} onClick={handleBegin} priority />
       }
       {hasBegun &&
         <>
-          <div style={{ padding: '10px 0' }}>
-          {/* <button style={{ marginRight: '10px' }}>← Previous</button> */}
-          {/* <button onClick={handleNext} style={{ float: 'right' }}>Next →</button> */}
+        <div className="buttons-and-video-wrapper">
+
           <Image className="image-button left-arrow" src={leftArrowBird} alt="left arrow bird" width="300px" height="200px" onClick={handlePrevious} />
-          <Image className="image-button right-arrow" src={rightArrowFlower} alt="right arrow flower" width="300px" height="175px" onClick={handleNext} style={{ float: 'right' }} />
-          </div>
 
         <div className="player-wrapper">
             <ReactPlayer
@@ -101,10 +96,18 @@ const App = () => {
             }}
             />
           </div>
+          <Image className="image-button right-arrow" src={rightArrowFlower} alt="right arrow flower" width="300px" height="175px" onClick={handleNext} style={{ float: 'right' }} />
+        </div>
+
         </>
       }
       <style>
         {`
+          .buttons-and-video-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
           .begin-button {
             width: ${beginButtonWidth}px;
             height: ${beginButtonHeight}px;
@@ -116,33 +119,48 @@ const App = () => {
           .player-wrapper {
             width: auto;
             height: auto;
+            cursor: inherit;
           }
-          .react-player {
-            // padding-top: 56.25%;
-            position: relative;
-          }
+              .react-player {
+                // padding-top: 56.25%;
+                position: relative;
+                cursor: inherit;
+              }
 
-          .react-player>div {
-            position: absolute;
-          }
+                  .react-player>div {
+                    position: absolute;
+                    // cursor: inherit;
+                  }
+
+                      // .react-player>div>iframe {
+                      //   cursor: url("../public/lucky-clover.png"), auto;
+                      // }
 
           .image-button {
             width: ${arrowWidth}px;
+            position: relative;
+            top: 0;
+            left: 0;
           }
-            .image-button.left-arrow {
-              height: ${200 / 300 * arrowWidth}px;
-            }
+              .image-button.left-arrow {
+                height: ${200 / 300 * arrowWidth}px;
+              }
 
-            .image-button.right-arrow {
-              height: ${175 / 300 * arrowWidth}px;
-            }
+              .image-button.right-arrow {
+                height: ${175 / 300 * arrowWidth}px;
+              }
 
-          .image-button:hover {
-            width: ${arrowWidth * 1.05}px;
+              .image-button.left-arrow:hover {
+                translate: -10px;
+                transition: translate 1s ease-in-out;
+                -webkit-transition: width 1s ease-in-out;
+              }
 
-            transition: width .1s;
-            -webkit-transition: width .1s;
-          }
+              .image-button.right-arrow:hover {
+                translate: 10px;
+                transition: translate 1s ease-in-out;
+                -webkit-transition: width 1s ease-in-out;
+              }
           
         `}
       </style>
