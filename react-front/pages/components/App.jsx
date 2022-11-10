@@ -16,7 +16,9 @@ const videoUrls = [
   ' https://youtu.be/OfCTG6ublDo',
   ' https://youtu.be/54DLyvf-72g',
   ' https://youtu.be/s4F_IceGcZg',
-  ' https://youtu.be/as127zNyQ6k'
+  // ' https://youtu.be/as127zNyQ6k',
+  'https://www.youtube.com/embed/as127zNyQ6k'
+
 ]
 
 const WIDTH = 900;
@@ -30,22 +32,82 @@ const beginButtonHeight = 1394 / 1517 * beginButtonWidth;
 
 const App = () => {
 
-  const [currentVideo, setCurrentVideo] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
   const [hasBegun, setHasBegun] = useState(false)
+  const [currentVideo, setCurrentVideo] = useState(null);
+  const [currentBufferingVideo, setCurrentBufferingVideo] = useState(0);
+  const [isBuffering, setIsBuffering] = useState(true);
+  const [videoOpacities, setVideoOpacities] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  // console.log('videoOpacities :>> ', videoOpacities);
 
-  const handleNext = (e) => {
-    e.preventDefault()
-    if (currentVideo < videoUrls.length - 1) {
-      setCurrentVideo(prev => prev + 1)
-    } else {
-      setCurrentVideo(0)
+  // useEffect(() => {
+
+  // }, [])
+
+  // useEffect(() => {
+  //   if (currentBufferingVideo === currentVideo) {
+  //     setIsBuffering(false);
+  //   }
+  // }, [currentBufferingVideo, currentVideo])
+
+  const handleNext = (e) => { 
+    //disable next & previous buttons
+    console.log('currentVideo :>> ', currentVideo);
+
+    const nextVideoIndex = currentVideo < videoUrls.length - 1 ? currentVideo + 1 : 0;
+    console.log('nextVideoIndex :>> ', nextVideoIndex);
+    setCurrentBufferingVideo(nextVideoIndex);
+    setIsBuffering(true);
+  }
+
+  const doVideoTransition = (currentVideoIndex, nextVideoIndex) => {
+    // fade out current video
+    // fade in next video
+    const newVideoOpacities = [...videoOpacities];
+    newVideoOpacities[currentVideoIndex] = 0;
+    newVideoOpacities[nextVideoIndex] = 1;
+    setVideoOpacities(newVideoOpacities);
+  }
+
+  const handleVideoReady = (index) => {
+    // console.log(`playing video #${index + 1}`)
+
+    if (!isBuffering) {
+      return;
     }
+
+    //wait until next video is loaded, then do video transition
+    let nextVideoIndex = currentVideo < videoUrls.length - 1 ? currentVideo + 1 : 0;
+
+    if (currentVideo === null) {
+      setVideoOpacities([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    } else {
+      doVideoTransition(currentVideo, nextVideoIndex);
+      fadeOutVolume(currentVideo);
+    }
+
+    setTimeout(() => {
+      setCurrentVideo(index);
+      setIsBuffering(false);
+    }, 3000)
+    //  setCurrentVideo(nextVideoIndex);
+  }
+
+  const fadeOutVolume = (index) => {
+    const video = document.getElementById(`react-video-${index}`);
+    // console.log('video :>> ', video);
+    video.volume = 1;
+    const fadeAudio = setInterval(() => {
+      // console.log(`video #${index + 1} volume :>>`, video.volume);
+      if ((video.volume -= 0.1) < 0) {
+        clearInterval(fadeAudio);
+        // console.log('video :>> ', video);
+      }
+    }, 100);
+
   }
 
   //function that switches to previous video
   const handlePrevious = (e) => {
-    e.preventDefault()
     if (currentVideo > 0) {
       setCurrentVideo(prev => prev - 1)
     } else {
@@ -53,24 +115,13 @@ const App = () => {
     }
   }
 
-  // useEffect(() => {
-  //   fetch("/api")
-  //     .then((res) => {
-  //       console.log('res.data :>> ', res.data);
-  //     })
-  //   // .then((data) => setData(data.message));
-  // }, []);
-
   const handleBegin = () => {
     setHasBegun(true)
-    setIsPlaying(true)
   }
 
   return (
     <div>
-      {/* <h1>Thanya Iyer | rest</h1> */}
       {!hasBegun &&
-        // <button onClick={handleBegin} style={{ fontSize: '20px' }}>Begin</button>
         <Image className="begin-button" alt="eye" src={eye} onClick={handleBegin} priority />
       }
       {hasBegun &&
@@ -80,21 +131,49 @@ const App = () => {
           <Image className="image-button left-arrow" src={leftArrowBird} alt="left arrow bird" width="300px" height="200px" onClick={handlePrevious} />
 
         <div className="player-wrapper">
-            <ReactPlayer
-              className='react-player'
-              url={videoUrls[currentVideo]}
-              playing={isPlaying}
-              loop
-              width={`${WIDTH}px`}
-              height={`${HEIGHT}px`}
-            config={{
-              file: {
-                attributes: {
-                  controlsList: "nofullscreen",
-                },
-              },
-            }}
-            />
+            {videoUrls.map((url, index) => {
+              return (
+                <ReactPlayer
+                  key={url}
+                  className='react-player'
+                  id={`react-video-${index}`}
+                  url={url}
+                  playing={index === currentVideo || index === currentBufferingVideo}
+                  loop
+                  width={`${WIDTH}px`}
+                  height={`${HEIGHT}px`}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: index,
+                    transition: 'opacity 5s',
+                    opacity: `${videoOpacities[index]}`
+                  }}
+                  onBuffer={() => console.log(`buffering video #${index + 1}`)}
+                  onPlay={() => handleVideoReady(index)} //() => console.log(`playing video #${index + 1}`)
+                  config={{
+                    youtube: {
+                      playerVars: { disablekb: 1, modestbranding: 1, rel: 0, showinfo: 0, controls: 0 },
+                      attributes: {
+                        id: `video-${index}`
+                      }
+                    },
+                    // file: {
+                    //   attributes: {
+                    //     id: `video-${index}`
+                    //   }
+                    // }
+
+                  }}
+                  // fileConfig={{ attributes: { id: `video-${index}` } }}
+
+                />
+              )
+            })
+
+            }
           </div>
           <Image className="image-button right-arrow" src={rightArrowFlower} alt="right arrow flower" width="300px" height="175px" onClick={handleNext} style={{ float: 'right' }} />
         </div>
@@ -104,8 +183,9 @@ const App = () => {
       <style>
         {`
           .buttons-and-video-wrapper {
+            width: ${WIDTH}px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
           }
           .begin-button {
@@ -138,16 +218,18 @@ const App = () => {
 
           .image-button {
             width: ${arrowWidth}px;
-            position: relative;
-            top: 0;
-            left: 0;
+            
           }
               .image-button.left-arrow {
                 height: ${200 / 300 * arrowWidth}px;
+                position: relative;
+                right: ${arrowWidth}px;
               }
 
               .image-button.right-arrow {
                 height: ${175 / 300 * arrowWidth}px;
+                position: relative;
+                left: ${arrowWidth}px;
               }
 
               .image-button.left-arrow:hover {
