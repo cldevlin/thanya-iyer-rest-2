@@ -6,18 +6,18 @@ import rightArrowFlower from '../../public/right-arrow-flower.png'
 import eye from '../../public/eye.png'
 
 const videoUrls = [
-  ' https://youtu.be/tKWryqqj-0c',
-  ' https://youtu.be/8aTC3pbooKM',
-  ' https://youtu.be/Ba0-_qvHzsM',
-  ' https://youtu.be/xm_bch6Yj60',
-  ' https://youtu.be/ZyApBa2zp3U',
-  ' https://youtu.be/L0zlFvFQvXo',
-  ' https://youtu.be/5Y4o1boFNmg',
-  ' https://youtu.be/OfCTG6ublDo',
-  ' https://youtu.be/54DLyvf-72g',
-  ' https://youtu.be/s4F_IceGcZg',
-  // ' https://youtu.be/as127zNyQ6k',
-  'https://www.youtube.com/embed/as127zNyQ6k'
+  '../../test.webm',
+  // 'https://youtu.be/8aTC3pbooKM',
+  // 'https://youtu.be/Ba0-_qvHzsM',
+  // 'https://youtu.be/xm_bch6Yj60',
+  // 'https://youtu.be/ZyApBa2zp3U',
+  // 'https://youtu.be/L0zlFvFQvXo',
+  // 'https://youtu.be/5Y4o1boFNmg',
+  // 'https://youtu.be/OfCTG6ublDo',
+  // 'https://youtu.be/54DLyvf-72g',
+  // 'https://youtu.be/s4F_IceGcZg',
+  // // ' https://youtu.be/as127zNyQ6k',
+  // 'https://www.youtube.com/embed/as127zNyQ6k'
 
 ]
 
@@ -133,43 +133,44 @@ const App = () => {
         <div className="player-wrapper">
             {videoUrls.map((url, index) => {
               return (
-                <ReactPlayer
-                  key={url}
-                  className='react-player'
-                  id={`react-video-${index}`}
-                  url={url}
-                  playing={index === currentVideo || index === currentBufferingVideo}
-                  loop
-                  width={`${WIDTH}px`}
-                  height={`${HEIGHT}px`}
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: index,
-                    transition: 'opacity 5s',
-                    opacity: `${videoOpacities[index]}`
-                  }}
-                  onBuffer={() => console.log(`buffering video #${index + 1}`)}
-                  onPlay={() => handleVideoReady(index)} //() => console.log(`playing video #${index + 1}`)
-                  config={{
-                    youtube: {
-                      playerVars: { disablekb: 1, modestbranding: 1, rel: 0, showinfo: 0, controls: 0 },
-                      attributes: {
-                        id: `video-${index}`
-                      }
-                    },
-                    // file: {
-                    //   attributes: {
-                    //     id: `video-${index}`
-                    //   }
-                    // }
+                <video url="'../../test.webm'" />
+                // <ReactPlayer
+                //   key={url}
+                //   className='react-player'
+                //   id={`react-video-${index}`}
+                //   src={url}
+                //   playing={index === currentVideo || index === currentBufferingVideo}
+                //   loop
+                //   width={`${WIDTH}px`}
+                //   height={`${HEIGHT}px`}
+                //   style={{
+                //     position: 'absolute',
+                //     top: '50%',
+                //     left: '50%',
+                //     transform: 'translate(-50%, -50%)',
+                //     zIndex: index,
+                //     transition: 'opacity 5s',
+                //     opacity: `${videoOpacities[index]}`
+                //   }}
+                //   onBuffer={() => console.log(`buffering video #${index + 1}`)}
+                //   onPlay={() => handleVideoReady(index)} //() => console.log(`playing video #${index + 1}`)
+                //   config={{
+                //     youtube: {
+                //       playerVars: { disablekb: 1, modestbranding: 1, rel: 0, showinfo: 0, controls: 0 },
+                //       attributes: {
+                //         id: `video-${index}`
+                //       }
+                //     },
+                //     // file: {
+                //     //   attributes: {
+                //     //     id: `video-${index}`
+                //     //   }
+                //     // }
 
-                  }}
-                  // fileConfig={{ attributes: { id: `video-${index}` } }}
+                //   }}
+                //   // fileConfig={{ attributes: { id: `video-${index}` } }}
 
-                />
+                // />
               )
             })
 
