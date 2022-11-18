@@ -6,19 +6,17 @@ import rightArrowFlower from '../../public/right-arrow-flower.png'
 import eye from '../../public/eye.png'
 
 const videoUrls = [
-  ' https://youtu.be/tKWryqqj-0c',
-  ' https://youtu.be/8aTC3pbooKM',
-  ' https://youtu.be/Ba0-_qvHzsM',
-  ' https://youtu.be/xm_bch6Yj60',
-  ' https://youtu.be/ZyApBa2zp3U',
-  ' https://youtu.be/L0zlFvFQvXo',
-  ' https://youtu.be/5Y4o1boFNmg',
-  ' https://youtu.be/OfCTG6ublDo',
-  ' https://youtu.be/54DLyvf-72g',
-  ' https://youtu.be/s4F_IceGcZg',
-  // ' https://youtu.be/as127zNyQ6k',
-  'https://www.youtube.com/embed/as127zNyQ6k'
-
+  'videos/1_instrumentals_intro.mp4',
+  'videos/2_Slow_burn.mp4',
+  'videos/3_instrumentals_transition.mp4',
+  'videos/4_leave_the_room.m4v',
+  'videos/5_instrumentals_transition.m4v',
+  'videos/6_new_kind_of_swim.m4v',
+  'videos/7_instrumentals_transition.m4v',
+  'videos/8_float_on.m4v',
+  'videos/9_instrumentals_transition.m4v',
+  'videos/10_I_hope_I_see_you_soon.m4v',
+  'videos/11_instrumentals_outro_reverse.m4v'
 ]
 
 const WIDTH = 900;
@@ -31,79 +29,68 @@ const beginButtonHeight = 1394 / 1517 * beginButtonWidth;
 
 
 const App = () => {
-
+  // handles the Eye button
   const [hasBegun, setHasBegun] = useState(false)
+  //keeps track of which video is playing
   const [currentVideo, setCurrentVideo] = useState(null);
-  const [currentBufferingVideo, setCurrentBufferingVideo] = useState(0);
-  const [isBuffering, setIsBuffering] = useState(true);
   const [videoOpacities, setVideoOpacities] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  // console.log('videoOpacities :>> ', videoOpacities);
 
-  // useEffect(() => {
-
-  // }, [])
-
-  // useEffect(() => {
-  //   if (currentBufferingVideo === currentVideo) {
-  //     setIsBuffering(false);
-  //   }
-  // }, [currentBufferingVideo, currentVideo])
 
   const handleNext = (e) => { 
     //disable next & previous buttons
     console.log('currentVideo :>> ', currentVideo);
 
+    const currentVideoIndex = currentVideo;
     const nextVideoIndex = currentVideo < videoUrls.length - 1 ? currentVideo + 1 : 0;
-    console.log('nextVideoIndex :>> ', nextVideoIndex);
-    setCurrentBufferingVideo(nextVideoIndex);
-    setIsBuffering(true);
+    console.log('nextVideo :>> ', nextVideoIndex + 1);
+    playVideo(nextVideoIndex)
+    doVideoTransition(currentVideo, nextVideoIndex);
+    setTimeout(() => {
+      pauseAndReset(currentVideoIndex)
+      setCurrentVideo(nextVideoIndex);
+    }, 3000)
+
+  }
+
+  const pauseAndReset = (index) => {
+    const vid = document.getElementById(`react-video-${index}`);
+    vid.pause();
+    vid.currentTime = 0;
+  }
+
+  const playVideo = (index) => {
+    const vid = document.getElementById(`react-video-${index}`);
+    vid.play()
   }
 
   const doVideoTransition = (currentVideoIndex, nextVideoIndex) => {
-    // fade out current video
-    // fade in next video
+    // audio fade
+    fadeOutVolume(currentVideo);
+
+    // visual fade:
     const newVideoOpacities = [...videoOpacities];
     newVideoOpacities[currentVideoIndex] = 0;
     newVideoOpacities[nextVideoIndex] = 1;
     setVideoOpacities(newVideoOpacities);
   }
 
-  const handleVideoReady = (index) => {
-    // console.log(`playing video #${index + 1}`)
-
-    if (!isBuffering) {
-      return;
-    }
-
-    //wait until next video is loaded, then do video transition
-    let nextVideoIndex = currentVideo < videoUrls.length - 1 ? currentVideo + 1 : 0;
-
-    if (currentVideo === null) {
-      setVideoOpacities([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    } else {
-      doVideoTransition(currentVideo, nextVideoIndex);
-      fadeOutVolume(currentVideo);
-    }
-
-    setTimeout(() => {
-      setCurrentVideo(index);
-      setIsBuffering(false);
-    }, 3000)
-    //  setCurrentVideo(nextVideoIndex);
+  const handleFirstVidReady = () => {
+    playVideo(0);
+    setVideoOpacities([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    setCurrentVideo(0)
   }
+
 
   const fadeOutVolume = (index) => {
     const video = document.getElementById(`react-video-${index}`);
-    // console.log('video :>> ', video);
-    video.volume = 1;
     const fadeAudio = setInterval(() => {
-      // console.log(`video #${index + 1} volume :>>`, video.volume);
-      if ((video.volume -= 0.1) < 0) {
+      console.log(`video #${index + 1} volume :>>`, video.volume);
+      if ((video.volume - 0.1) < 0) {
         clearInterval(fadeAudio);
-        // console.log('video :>> ', video);
+        return;
       }
-    }, 100);
-
+      video.volume -= 0.1;
+    }, 300);
   }
 
   //function that switches to previous video
@@ -133,15 +120,11 @@ const App = () => {
         <div className="player-wrapper">
             {videoUrls.map((url, index) => {
               return (
-                <ReactPlayer
+                <video
+                  src={url}
                   key={url}
-                  className='react-player'
+                  className="react-player"
                   id={`react-video-${index}`}
-                  url={url}
-                  playing={index === currentVideo || index === currentBufferingVideo}
-                  loop
-                  width={`${WIDTH}px`}
-                  height={`${HEIGHT}px`}
                   style={{
                     position: 'absolute',
                     top: '50%',
@@ -149,26 +132,15 @@ const App = () => {
                     transform: 'translate(-50%, -50%)',
                     zIndex: index,
                     transition: 'opacity 5s',
-                    opacity: `${videoOpacities[index]}`
+                    opacity: `${videoOpacities[index]}`,
+                    width: `${WIDTH}px`,
+                    height: `${HEIGHT}px`,
                   }}
-                  onBuffer={() => console.log(`buffering video #${index + 1}`)}
-                  onPlay={() => handleVideoReady(index)} //() => console.log(`playing video #${index + 1}`)
-                  config={{
-                    youtube: {
-                      playerVars: { disablekb: 1, modestbranding: 1, rel: 0, showinfo: 0, controls: 0 },
-                      attributes: {
-                        id: `video-${index}`
-                      }
-                    },
-                    // file: {
-                    //   attributes: {
-                    //     id: `video-${index}`
-                    //   }
-                    // }
+                  loop
+                  onCanPlayThrough={() => index === 0 && currentVideo === null && handleFirstVidReady()}
 
-                  }}
-                  // fileConfig={{ attributes: { id: `video-${index}` } }}
-
+                  onPlay={() => console.log('playing #', index + 1)}
+                  onStalled={() => console.log('stalled #', index + 1)}
                 />
               )
             })
