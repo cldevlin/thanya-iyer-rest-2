@@ -13,15 +13,19 @@ import pinkDaisyFlower from '../../public/pink-daisy-flower.png'
 
 //deminsions: 200 x 219
 import redLotus from '../../public/red-lotus.png'
+
+//50 x 47
+import greenEggFlower from '../../public/green-egg-flower.png'
+
 const videoUrls = [
   'videos/1_instrumentals_intro.mp4',
   'videos/2_Slow_burn.mp4',
   'videos/3_instrumentals_transition.mp4',
-  'videos/4_leave_the_room.m4v',
-  'videos/5_instrumentals_transition.m4v',
+  'videos/4_leave_the_room.mp4',
+  'videos/5_instrumentals_transition.mp4',
   'videos/6_new_kind_of_swim.m4v',
-  'videos/7_instrumentals_transition.m4v',
-  'videos/8_float_on.m4v',
+  'videos/7_instrumentals_transition.mp4',
+  'videos/8_float_on.mp4',
   'videos/9_instrumentals_transition.m4v',
   'videos/10_I_hope_I_see_you_soon.m4v',
   'videos/11_instrumentals_outro_reverse.m4v'
