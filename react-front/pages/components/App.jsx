@@ -16,6 +16,7 @@ import redLotus from '../../public/red-lotus.png'
 
 //50 x 47
 import greenEggFlower from '../../public/green-egg-flower.png'
+// import ProgressBar from "./ProgressBar";
 
 const videoUrls = [
   'videos/1_instrumentals_intro.mp4',
@@ -153,6 +154,9 @@ const App = () => {
 
       {hasBegun && 
         <div>
+          {/* {readyCount >= 11 &&
+            <ProgressBar />
+          } */}
 
           <div className="animated-icons left">
             <Image className="blue-yellow-bird" src={blueYellowBird} alt="" />
