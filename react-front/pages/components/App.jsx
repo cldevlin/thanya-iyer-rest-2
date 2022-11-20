@@ -23,12 +23,12 @@ const videoUrls = [
   'videos/3_instrumentals_transition.mp4',
   'videos/4_leave_the_room.mp4',
   'videos/5_instrumentals_transition.mp4',
-  'videos/6_new_kind_of_swim.m4v',
+  'videos/6_new_kind_of_swim.mp4',
   'videos/7_instrumentals_transition.mp4',
   'videos/8_float_on.mp4',
-  'videos/9_instrumentals_transition.m4v',
-  'videos/10_I_hope_I_see_you_soon.m4v',
-  'videos/11_instrumentals_outro_reverse.m4v'
+  'videos/9_instrumentals_transition.mp4',
+  'videos/10_I_hope_I_see_you_soon.mp4',
+  'videos/11_instrumentals_outro_reverse.mp4'
 ]
 
 const WIDTH = 900;
@@ -131,7 +131,7 @@ const App = () => {
   const fadeOutVolume = (index) => {
     const video = document.getElementById(`react-video-${index}`);
     const fadeAudio = setInterval(() => {
-      console.log(`video #${index + 1} volume :>>`, video.volume);
+      // console.log(`video #${index + 1} volume :>>`, video.volume);
       if ((video.volume - 0.1) < 0) {
         clearInterval(fadeAudio);
         return;
@@ -150,11 +150,16 @@ const App = () => {
       {!hasBegun &&
         <Image className="begin-button" alt="eye" src={eye} onClick={handleBegin} priority />
       }
-      {hasBegun &&
+
+      {hasBegun && 
         <div>
+
           <div className="animated-icons left">
             <Image className="blue-yellow-bird" src={blueYellowBird} alt="" />
             <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" />
+            {/* <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" />
+            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" />
+            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" /> */}
 
           </div>
 
@@ -302,6 +307,41 @@ const App = () => {
                 translate: 10px;
                 transition: translate 1s ease-in-out;
                 -webkit-transition: width 1s ease-in-out;
+              }
+
+              @keyframes rotation {
+                from {
+                  transform: rotate(0deg);
+                }
+                to {
+                  transform: rotate(359deg);
+                }
+              }
+
+              @keyframes vibrate {
+                0% { transform: rotate(0deg); }
+                10% { transform: rotate(-1deg); }
+                20% { transform: rotate(1deg); }
+                30% { transform: rotate(0deg); }
+                40% { transform: rotate(1deg); }
+                50% { transform: rotate(-1deg); }
+                60% { transform: rotate(0deg); }
+                70% { transform: rotate(-1deg); }
+                80% { transform: rotate(1deg); }
+                90% { transform: rotate(0deg); }
+                100% { transform: rotate(-1deg); }
+              }
+
+              .pink-daisy-flower:hover {
+                /* Start the vibrate animation with duration 0.5 seconds */
+                animation: vibrate 0.5s;
+              
+                /* When the animation is finished, start again */
+                animation-iteration-count: infinite;
+              }
+
+              .blue-yellow-bird:hover {
+                animation: rotation 2s infinite linear;
               }
           
         `}
