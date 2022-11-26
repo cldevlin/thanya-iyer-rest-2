@@ -7,16 +7,27 @@ import eye from '../../public/eye.png'
 
 //dimensions: w 200 x  h 232
 import blueYellowBird from '../../public/weird-blue-and-yellow-bird.png'
+const blueYellowBirdWidth = 200;
+const blueYellowBirdHeight = 232;
 
 //dimensions: w 200 x h 196
 import pinkDaisyFlower from '../../public/pink-daisy-flower.png'
+const pinkDaisyFlowerWidth = 200;
+const pinkDaisyFlowerHeight = 196;
 
 //deminsions: 200 x 219
 import redLotus from '../../public/red-lotus.png'
+const redLotusWidth = 200;
+const redLotusHeight = 219;
 
 //50 x 47
 import greenEggFlower from '../../public/green-egg-flower.png'
-// import ProgressBar from "./ProgressBar";
+
+//200 x 160
+import calqLogo from '../../public/logo-calq-noir.png'
+const calqLogoWidth = 200;
+const calqLogoHeight = 160;
+import ProgressBar from "./ProgressBar";
 
 const videoUrls = [
   'videos/1_instrumentals_intro.mp4',
@@ -154,9 +165,14 @@ const App = () => {
 
       {hasBegun && 
         <div>
-          {/* {readyCount >= 11 &&
-            <ProgressBar />
-          } */}
+          {readyCount < 11 &&
+            < ProgressBar
+              bgcolor="#000000"
+              completed={readyCount > 11 ? 100 : readyCount / 11 * 100}
+              image={greenEggFlower}
+              totalSteps={11}
+            />
+          }
 
           <div className="animated-icons left">
             <Image className="blue-yellow-bird" src={blueYellowBird} alt="" />
@@ -169,6 +185,7 @@ const App = () => {
 
           <div className="animated-icons right">
             <Image className="red-lotus" src={redLotus} alt="" />
+            <Image className="calq-logo" src={calqLogo} alt="" />
 
           </div>
 
@@ -228,27 +245,40 @@ const App = () => {
           }
 
           .animated-icons.left {
-            left: 0;
+            left: 30px;
             top: 0;
           }
               .blue-yellow-bird {
-                // position: relative;
-                // left: 50px;
-                // top: 50px;
-                // width: 50%;
-                // height: 50%;
+                width: ${blueYellowBirdWidth * 0.4}px;
+                height: ${blueYellowBirdHeight * 0.4}px;
+                animation: rotation 5s infinite linear;
               }
               .pink-daisy-flower {
-                // position: relative;
-                // left: 50px;
-                // bottom: 50px;
+                width: ${pinkDaisyFlowerWidth * 0.45}px;
+                height: ${pinkDaisyFlowerHeight * 0.45}px;
+                margin-left: 40px;
+
+                animation: vibrate 0.5s;
+                animation-iteration-count: infinite;
               }
+
           .animated-icons.right {
-            right: 0;
+            right: 30px;
             top: 0;
           }
               .red-lotus {
-                margin-right: 10px
+                width: ${redLotusWidth * 0.47}px;
+                height: ${redLotusHeight * 0.47}px;
+                margin-right: 10px;
+                animation: vibrate 0.5s;
+                animation-iteration-count: infinite;
+              }
+              .calq-logo {
+                width: ${calqLogoWidth * 0.4}px;
+                height: ${calqLogoHeight * 0.4}px;
+                margin-right: 50px;
+                opacity: 0.5;
+                animation: rotationLeft 8s infinite linear;
               }
 
           .buttons-and-video-wrapper {
@@ -275,12 +305,10 @@ const App = () => {
                 position: relative;
                 cursor: inherit;
               }
-
                   .react-player>div {
                     position: absolute;
                     // cursor: inherit;
                   }
-
                       // .react-player>div>iframe {
                       //   cursor: url("../public/lucky-clover.png"), auto;
                       // }
@@ -302,15 +330,15 @@ const App = () => {
               }
 
               .image-button.left-arrow:hover {
-                translate: -10px;
-                transition: translate 1s ease-in-out;
-                -webkit-transition: width 1s ease-in-out;
+                translate: -20px;
+                transition: translate 0.5s;
+                // -webkit-transition: width 1s ease-in-out;
               }
 
               .image-button.right-arrow:hover {
-                translate: 10px;
-                transition: translate 1s ease-in-out;
-                -webkit-transition: width 1s ease-in-out;
+                translate: 20px;
+                transition: translate 0.5s;
+                // -webkit-transition: width 1s ease-in-out;
               }
 
               @keyframes rotation {
@@ -319,6 +347,15 @@ const App = () => {
                 }
                 to {
                   transform: rotate(359deg);
+                }
+              }
+
+              @keyframes rotationLeft {
+                from {
+                  transform: rotate(0deg);
+                }
+                to {
+                  transform: rotate(-359deg);
                 }
               }
 
@@ -336,18 +373,6 @@ const App = () => {
                 100% { transform: rotate(-1deg); }
               }
 
-              .pink-daisy-flower:hover {
-                /* Start the vibrate animation with duration 0.5 seconds */
-                animation: vibrate 0.5s;
-              
-                /* When the animation is finished, start again */
-                animation-iteration-count: infinite;
-              }
-
-              .blue-yellow-bird:hover {
-                animation: rotation 2s infinite linear;
-              }
-          
         `}
       </style>
     </div>

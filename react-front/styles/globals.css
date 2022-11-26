@@ -8,6 +8,11 @@ body {
   background-image: url("../public/back-cover.jpg");
 }
 
+.loading-bar {
+  background-image: url("../public/green-egg-flower.png");
+  background-size: contain;
+  background-repeat: repeat-x;
+}
 a {
   /* color: inherit; */
     /* text-decoration: none; */
