@@ -61,8 +61,16 @@ const App = () => {
 
   const [buttonsAreDisabled, setButtonsAreDisabled] = useState(true)
   const [readyCount, setReadyCount] = useState(0);
+  const [allVidsReady, setAllVidsReady] = useState(false);
 
-  console.log('readyCount :>> ', readyCount);
+  // console.log('readyCount :>> ', readyCount);
+
+  useEffect(() => {
+    if (readyCount === 11) {
+      setAllVidsReady(true);
+      handleFirstVidReady()
+    }
+  }, [readyCount])
 
   const handleNext = (e) => { 
     if (buttonsAreDisabled) {
@@ -72,7 +80,7 @@ const App = () => {
 
     const currentVideoIndex = currentVideo;
     const nextVideoIndex = currentVideo < videoUrls.length - 1 ? currentVideo + 1 : 0;
-    console.log('nextVideo :>> ', nextVideoIndex + 1);
+    // console.log('nextVideo :>> ', nextVideoIndex + 1);
     playVideo(nextVideoIndex)
     doVideoTransition(currentVideo, nextVideoIndex);
     setTimeout(() => {
@@ -124,9 +132,9 @@ const App = () => {
   }
 
   const handleVideoReady = (index) => {
-    if (index === 0 && currentVideo === null) {
-      handleFirstVidReady()
-    }
+    // if (index === 0 && currentVideo === null) {
+    //   handleFirstVidReady()
+    // }
     setReadyCount(prev => prev + 1)
   }
 
@@ -165,7 +173,7 @@ const App = () => {
 
       {hasBegun && 
         <div>
-          {readyCount < 11 &&
+          {!allVidsReady &&
             < ProgressBar
               bgcolor="#000000"
               completed={readyCount > 11 ? 100 : readyCount / 11 * 100}
@@ -185,6 +193,7 @@ const App = () => {
 
           <div className="animated-icons right">
             <Image className="red-lotus" src={redLotus} alt="" />
+            <div></div>
             <Image className="calq-logo" src={calqLogo} alt="" />
 
           </div>
