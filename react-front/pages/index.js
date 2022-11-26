@@ -13,9 +13,9 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>rest</title>
         <meta name="description" content="Thanya Iyer - rest" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/green-daisy-flower.png" />
       </Head>
 
       <main className={styles.main}>
