@@ -1,33 +1,46 @@
 import { useState, useEffect } from "react";
 import Image from 'next/image'
 import ReactPlayer from "react-player";
+
+import ProgressBar from "./ProgressBar";
+
 import leftArrowBird from '../../public/left-arrow-bird.png'
 import rightArrowFlower from '../../public/right-arrow-flower.png'
 import eye from '../../public/eye.png'
 
-//dimensions: w 200 x  h 232
 import blueYellowBird from '../../public/weird-blue-and-yellow-bird.png'
 const blueYellowBirdWidth = 200;
 const blueYellowBirdHeight = 232;
-
-//dimensions: w 200 x h 196
 import pinkDaisyFlower from '../../public/pink-daisy-flower.png'
 const pinkDaisyFlowerWidth = 200;
 const pinkDaisyFlowerHeight = 196;
 
-//deminsions: 200 x 219
 import redLotus from '../../public/red-lotus.png'
 const redLotusWidth = 200;
 const redLotusHeight = 219;
 
-//50 x 47
 import greenEggFlower from '../../public/green-egg-flower.png'
 
-//200 x 160
 import calqLogo from '../../public/logo-calq-noir.png'
 const calqLogoWidth = 200;
 const calqLogoHeight = 160;
-import ProgressBar from "./ProgressBar";
+
+import birdOne from '../../public/bird-1.png';
+const birdOneWidth = 150;
+const birdOneHeight = 155;
+
+import flower from '../../public/flower.png';
+const flowerWidth = 150;
+const flowerHeight = 250;
+
+import paintDots from '../../public/paint-dots.png'
+const paintDotsWidth = 500;
+const paintDotsHeight = 500;
+
+import paintTwo from '../../public/paint-pt-2.png';
+const paintTwoWidth = 500;
+const paintTwoHeight = 477;
+
 
 const videoUrls = [
   'videos/1_instrumentals_intro.mp4',
@@ -183,17 +196,36 @@ const App = () => {
           }
 
           <div className="animated-icons left">
-            <Image className="blue-yellow-bird" src={blueYellowBird} alt="" />
-            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" />
-            {/* <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" />
-            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" />
-            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="" /> */}
+            <Image className="blue-yellow-bird" src={blueYellowBird} alt="blue-yellow-bird" />
+            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="pink-daisy-flower" />
 
+            <div></div>
+            <div></div>
+
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <Image className="paint-dots" src={paintDots} alt="paint-dots" />
+          </div>
+
+          <div className="animated-icons center">
+            <Image className="flower" src={flower} alt="flower" />
+            <Image className="bird-1" src={birdOne} alt="" />
+            <Image className="pink-daisy-flower" src={pinkDaisyFlower} alt="pink-daisy-flower" />
+            <Image className="paint-2" src={paintTwo} alt="paint-2" />
           </div>
 
           <div className="animated-icons right">
             <Image className="red-lotus" src={redLotus} alt="" />
             <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <Image className="bird-1" src={birdOne} alt="" />
             <Image className="calq-logo" src={calqLogo} alt="" />
 
           </div>
@@ -258,17 +290,59 @@ const App = () => {
             top: 0;
           }
               .blue-yellow-bird {
-                width: ${blueYellowBirdWidth * 0.4}px;
-                height: ${blueYellowBirdHeight * 0.4}px;
+                width: ${blueYellowBirdWidth * 0.3}px;
+                height: ${blueYellowBirdHeight * 0.3}px;
                 animation: rotation 5s infinite linear;
               }
               .pink-daisy-flower {
-                width: ${pinkDaisyFlowerWidth * 0.45}px;
-                height: ${pinkDaisyFlowerHeight * 0.45}px;
-                margin-left: 40px;
+                width: ${pinkDaisyFlowerWidth * 0.3}px;
+                height: ${pinkDaisyFlowerHeight * 0.3}px;
+                margin-left: 60px;
 
                 animation: vibrate 0.5s;
                 animation-iteration-count: infinite;
+              }
+
+              .paint-dots {
+                width: ${paintDotsWidth * 0.3}px;
+                height: ${paintDotsHeight * 0.3}px;
+                // margin-left: 40px;
+
+                animation: vibrate 2s;
+                animation-iteration-count: infinite;
+              }
+
+          .animated-icons.center {
+            left: 50%;
+            top: 0;
+            justify-content: space-between;
+
+          }
+              .flower {
+                width: ${flowerWidth * 0.3}px;
+                height: ${flowerHeight * 0.3}px;
+                margin-left: 20%;
+                animation: pendulumOne 8s infinite linear;
+              }
+              .center>.bird-1 {
+                position: absolute;
+                top: 3%;
+                left: -450px;
+                animation: slideOne 15s infinite linear;
+
+              }
+              .center>.pink-daisy-flower {
+                position: absolute;
+                left: -330px;
+                bottom: 5%;
+              }
+              .paint-2 {
+                width: ${paintTwoWidth * 0.3}px;
+                height: ${paintTwoHeight * 0.3}px;
+                position: absolute;
+                bottom: 0;
+                left: 100px;
+                animation: slideOne 12s infinite linear;
               }
 
           .animated-icons.right {
@@ -276,16 +350,23 @@ const App = () => {
             top: 0;
           }
               .red-lotus {
-                width: ${redLotusWidth * 0.47}px;
-                height: ${redLotusHeight * 0.47}px;
+                width: ${redLotusWidth * 0.3}px;
+                height: ${redLotusHeight * 0.3}px;
                 margin-right: 10px;
-                animation: vibrate 0.5s;
+                animation: vibrate 1s;
                 animation-iteration-count: infinite;
               }
+              .bird-1 {
+                width: ${redLotusWidth * 0.3}px;
+                height: ${redLotusHeight * 0.3}px;
+                margin-left: 60px;
+                animation: pendulumOne 5s infinite linear;
+                
+              }
               .calq-logo {
-                width: ${calqLogoWidth * 0.4}px;
-                height: ${calqLogoHeight * 0.4}px;
-                margin-right: 50px;
+                width: ${calqLogoWidth * 0.3}px;
+                height: ${calqLogoHeight * 0.3}px;
+                margin-left: -50px;
                 opacity: 0.5;
                 animation: rotationLeft 8s infinite linear;
               }
@@ -382,6 +463,45 @@ const App = () => {
                 100% { transform: rotate(-1deg); }
               }
 
+              @keyframes pendulumOne {
+                0% { transform: rotate(0deg); }
+                12.5% { transform: rotate(-45deg); }
+                25% { transform: rotate(0deg); }
+                37.5% { transform: rotate(45deg); }
+                50% { transform: rotate(0deg); }
+                62.5% { transform: rotate(-45deg); }
+                75% { transform: rotate(0deg); }
+                87.5% { transform: rotate(45deg); }
+                100% { transform: rotate(0deg); }
+              }
+
+              @keyframes pendulumTwo {
+                0% { transform: rotate(0deg); }
+                10% { transform: rotate(-100deg); }
+                20% { transform: rotate(20deg); }
+                30% { transform: rotate(-30deg); }
+                40% { transform: rotate(10deg); }
+                50% { transform: rotate(0deg); }
+                60% { transform: rotate(50deg); }
+                70% { transform: rotate(45deg); }
+                80% { transform: rotate(110deg); }
+                90% { transform: rotate(200deg); }
+                100% { transform: rotate(359deg); }
+              }
+
+              @keyframes slideOne {
+                0% { transform: translateX(0px); }
+                10% { transform: translateX(20px); }
+                20% { transform: translateX(0px); }
+                30% { transform: translateX(20px); }
+                40% { transform: translateX(0px); }
+                50% { transform: translateX(20px); }
+                60% { transform: translateX(0px); }
+                70% { transform: translateX(20px); }
+                80% { transform: translateX(0px); }
+                90% { transform: translateX(20px); }
+                100% { transform: translateX(0px); }
+              }
         `}
       </style>
     </div>
