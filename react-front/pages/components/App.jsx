@@ -84,7 +84,6 @@ const App = () => {
   const [readyCount, setReadyCount] = useState(0);
   const [allVidsReady, setAllVidsReady] = useState(false);
 
-  console.log('readyCount :>> ', readyCount);
 
   useEffect(() => {
     if (readyCount === 11) {
@@ -156,6 +155,13 @@ const App = () => {
     // if (index === 0 && currentVideo === null) {
     //   handleFirstVidReady()
     // }
+    console.log('ready #', index + 1)
+
+    setReadyCount(prev => prev + 1)
+  }
+
+  const handleStalled = (index) => {
+    console.log('stalled #', index + 1)
     setReadyCount(prev => prev + 1)
   }
 
@@ -270,7 +276,7 @@ const App = () => {
                     onCanPlayThrough={() => handleVideoReady(index)}
 
                     onPlay={() => console.log('playing #', index + 1)}
-                    onStalled={() => console.log('stalled #', index + 1)}
+                    onStalled={() => handleStalled(index)}
                     // https://stackoverflow.com/questions/28105950/html5-video-stalled-event
                   />
                 )
