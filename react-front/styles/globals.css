@@ -13,22 +13,14 @@ body {
   background-size: contain;
   background-repeat: repeat-x;
 }
-a {
-  /* color: inherit; */
-    /* text-decoration: none; */
+.rest-three-pencil:hover {
+  cursor: url("../public/yellow-flying-bird.png"), auto;
 }
 
+.bandcamp-link:hover {
+  cursor: url("../public/yellow-flying-bird.png"), auto;
+}
 * {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    /* color-scheme: dark; */
-  }
-
-  body {
-    /* color: rgb(64, 64, 64); */
-      /* background: black; */
-  }
-}

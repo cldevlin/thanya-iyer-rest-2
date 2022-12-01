@@ -41,6 +41,14 @@ import paintTwo from '../../public/paint-pt-2.png';
 const paintTwoWidth = 500;
 const paintTwoHeight = 477;
 
+import restTwoPencil from '../../public/rest-two-pencil.png';
+const restTwoPencilWidth = 300;
+const restTwoPencilHeight = 260;
+
+import restThreePencil from '../../public/rest-three-pencil.png';
+const restThreePencilWidth = 300;
+const restThreePencilHeight = 260;
+
 
 const videoUrls = [
   'videos/1_instrumentals_intro.mp4',
@@ -76,7 +84,7 @@ const App = () => {
   const [readyCount, setReadyCount] = useState(0);
   const [allVidsReady, setAllVidsReady] = useState(false);
 
-  // console.log('readyCount :>> ', readyCount);
+  console.log('readyCount :>> ', readyCount);
 
   useEffect(() => {
     if (readyCount === 11) {
@@ -219,8 +227,12 @@ const App = () => {
           </div>
 
           <div className="animated-icons right">
-            <Image className="red-lotus" src={redLotus} alt="" />
+            {/* <Image className="rest-two-pencil" src={restTwoPencil} alt="" /> */}
+            <a className="bandcamp-link" href="https://thanyaiyer.bandcamp.com/album/rest" target="_blank">
+              <Image className="rest-three-pencil" src={restThreePencil} alt="" />
+            </a>
             <div></div>
+            <Image className="red-lotus" src={redLotus} alt="" />
             <div></div>
             <div></div>
             <div></div>
@@ -259,6 +271,7 @@ const App = () => {
 
                     onPlay={() => console.log('playing #', index + 1)}
                     onStalled={() => console.log('stalled #', index + 1)}
+                    // https://stackoverflow.com/questions/28105950/html5-video-stalled-event
                   />
                 )
               })
@@ -349,6 +362,11 @@ const App = () => {
             right: 30px;
             top: 0;
           }
+              .rest-three-pencil {
+                width: ${restThreePencilWidth * 0.3}px;
+                height: ${restThreePencilHeight * 0.3}px;
+                animation: seeSaw 1s infinite linear;
+              }
               .red-lotus {
                 width: ${redLotusWidth * 0.3}px;
                 height: ${redLotusHeight * 0.3}px;
@@ -501,6 +519,28 @@ const App = () => {
                 80% { transform: translateX(0px); }
                 90% { transform: translateX(20px); }
                 100% { transform: translateX(0px); }
+              }
+
+              @keyframes seeSaw {
+                0% {
+                  transform: rotate(5deg);
+                }
+          
+                25% {
+                    transform: rotate(0deg);
+                }
+          
+                50% {
+                    transform: rotate(-5deg);
+                }
+          
+                75% {
+                    transform: rotate(0deg);
+                }
+          
+                100% {
+                    transform: rotate(5deg);
+                }
               }
         `}
       </style>
