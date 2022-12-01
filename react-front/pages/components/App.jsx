@@ -228,7 +228,7 @@ const App = () => {
 
           <div className="animated-icons right">
             {/* <Image className="rest-two-pencil" src={restTwoPencil} alt="" /> */}
-            <a className="bandcamp-link" href="https://thanyaiyer.bandcamp.com/album/rest" target="_blank">
+            <a className="bandcamp-link" href="https://thanyaiyer.bandcamp.com/album/rest" target="_blank" rel="noopener noreferrer">
               <Image className="rest-three-pencil" src={restThreePencil} alt="" />
             </a>
             <div></div>
