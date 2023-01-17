@@ -86,6 +86,7 @@ const App = () => {
 
 
   useEffect(() => {
+    console.log('readyCount :>> ', readyCount);
     if (readyCount === 11) {
       setAllVidsReady(true);
       handleFirstVidReady()
