@@ -83,6 +83,8 @@ const App = () => {
   const [buttonsAreDisabled, setButtonsAreDisabled] = useState(true)
   const [readyCount, setReadyCount] = useState(0);
   const [allVidsReady, setAllVidsReady] = useState(false);
+  // handle visibility of credits in bottom left corner
+  const [bottomLeftHover, setBottomLeftHover] = useState(false);
 
 
   useEffect(() => {
@@ -93,7 +95,7 @@ const App = () => {
     }
   }, [readyCount])
 
-  const handleNext = (e) => { 
+  const handleNext = (e) => {
     if (buttonsAreDisabled) {
       return;
     }
@@ -199,7 +201,7 @@ const App = () => {
         <Image className="begin-button" alt="eye" src={eye} onClick={handleBegin} priority />
       }
 
-      {hasBegun && 
+      {hasBegun &&
         <div>
           {!allVidsReady &&
             < ProgressBar
@@ -223,7 +225,18 @@ const App = () => {
             <div></div>
             <div></div>
             <div></div>
-            <Image className="paint-dots" src={paintDots} alt="paint-dots" />
+            <div
+              className="bottom-left-corner"
+              onMouseEnter={() => setBottomLeftHover(true)}
+              onMouseLeave={() => setBottomLeftHover(false)}
+            >
+              <Image className="paint-dots" src={paintDots} alt="paint-dots" style={bottomLeftHover ? { opacity: 0 } : { opacity: 1 }} />
+              <div className="credits" style={bottomLeftHover ? { opacity: 1 } : { opacity: 0 }} >
+                <p>Sophie Grouev - Videos</p>
+                <p>Amanda Stormyr - Painting</p>
+                <p>Claire Devlin - Website</p>
+              </div>
+            </div>
           </div>
 
           <div className="animated-icons center">
@@ -293,6 +306,10 @@ const App = () => {
       }
 
       <style>
+        @import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&display=swap');
+      </style>
+
+      <style>
         {`
           .animated-icons {
             position: absolute;
@@ -323,14 +340,27 @@ const App = () => {
                 animation-iteration-count: infinite;
               }
 
-              .paint-dots {
-                width: ${paintDotsWidth * 0.3}px;
-                height: ${paintDotsHeight * 0.3}px;
-                // margin-left: 40px;
+                  .paint-dots {
+                    width: ${paintDotsWidth * 0.3}px;
+                    height: ${paintDotsHeight * 0.3}px;
 
-                animation: vibrate 2s;
-                animation-iteration-count: infinite;
-              }
+                    animation: vibrate 2s;
+                    animation-iteration-count: infinite;
+                  }
+                  .credits {
+                    font-family: 'Just Me Again Down Here', cursive;
+                    font-size: 20px;
+                    color: grey;
+                    position: absolute;
+                    bottom: 20px;
+                    left: -5px;
+                    width: 200px;
+                    margin: 2em 0;
+                    // opacity: 0;
+                  }
+                      .credits>p {
+                        margin: 0;
+                      }
 
           .animated-icons.center {
             left: 50%;
