@@ -306,7 +306,7 @@ const App = () => {
       }
 
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&display=swap');
+        @import url(&apos;https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&display=swap&apos;);
       </style>
 
       <style>
